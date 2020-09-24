@@ -106,7 +106,7 @@ for i in range(n):
 
     s_test = input_file.readline()
 
-    test.append(tuple(int(c) for c in s_test.split()))
+    test.append(tuple(float(c) for c in s_test.split()))
 
 print(f'\ninput processed: k = {k}, n = {n}, observations are: {test}')
 
