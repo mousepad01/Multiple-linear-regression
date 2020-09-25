@@ -137,7 +137,7 @@ for i_test in range(n):
 
         X[i_test][coord + 1] = test[i_test][coord]
 
-# configuring matrix Y
+# configuring vector Y
 
 Y = [[test[i_test][k]] for i_test in range(n)]
 
