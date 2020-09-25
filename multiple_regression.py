@@ -1,5 +1,5 @@
 
-DECIMAL_PRECISION = 10
+DECIMAL_PRECISION = 4
 
 # ---------------------------- MATRIX OPERATIONS -------------------------------
 
@@ -52,7 +52,7 @@ def inverse(matrix):
         for c in range(len(cofactor_matrix[0])):
 
             cofactor_matrix[l][c] /= det
-            cofactor_matrix[l][c] = round(cofactor_matrix[l][c], DECIMAL_PRECISION)
+            #cofactor_matrix[l][c] = round(cofactor_matrix[l][c], DECIMAL_PRECISION)
 
     return transposed(cofactor_matrix)
 
@@ -147,7 +147,7 @@ print(f'auxiliary matrices: \nX = {X}, \nY = {Y}')
 
 B = multiply(multiply(inverse(multiply(transposed(X), X)), transposed(X)), Y)
 
-print(f'\nequation of hyperplane is: y = {B[0][0]} +', end=' ')
+print(f'\nequation of hyperplane is: y = {round(B[0][0], DECIMAL_PRECISION)} +', end=' ')
 
 for i in range(1, k):
     print(f'{round(B[i][0], DECIMAL_PRECISION)} * x{i} +', end=' ')
