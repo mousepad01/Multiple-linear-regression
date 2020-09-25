@@ -91,7 +91,8 @@ print('describing the input file:\n')
 
 print('first line: number of independent variables - k')
 print('second line: number of observations - n')
-print('next n lines: tuples of data corresponding to each observation: x0 x1 x2 ... xk y')
+print('next n lines: tuples of data corresponding to each observation: x1 x2 ... xk y')
+print('last line: exponents of independent variables x1, x2, ... xk')
 
 # processing input from input file
 
@@ -111,12 +112,16 @@ for i in range(n):
 
     test.append(tuple(float(c) for c in s_test.split()))
 
+exponents = input_file.readline()
+exponents = [int(c) for c in exponents.split()]
+
 print(f'\ninput processed: k = {k}, n = {n}, observations are: {test}')
+print(f'coefficients for independent variables are: {exponents}')
 
 # calculating coefficients b0, b1, b2, ... bk
 
-# we want bi coefficients so that SUM(i = 0, n) (Yi - (b0 + b1 * xi1 + b2 * xi2 + ... bk * xik)) ^ 2 is minimal
-# all the xij s and yi s are known, except for parameters b0, b1, ... bk
+# we want bi coefficients so that SUM(i = 0, n) (Yi - (b0 + b1 * xi1 ^ exp1 + b2 * xi2 ^ exp2 + ... bk * xik ^ expk)) ^ 2 is minimal
+# all the xij s ,expi s and yi s are known, except for parameters b0, b1, ... bk
 # because of that, we treat this expression as a function S: R^k -> R
 # the problem is reduced to finding the minimum point of this function
 # minimum point satisfies the following: dS / dbi = 0 for all bi with i = 1, k
@@ -138,7 +143,7 @@ for i_test in range(n):
 
     for coord in range(len(test[i_test]) - 1):
 
-        X[i_test][coord + 1] = test[i_test][coord]
+        X[i_test][coord + 1] = test[i_test][coord] ** exponents[coord]
 
 # configuring vector Y
 
