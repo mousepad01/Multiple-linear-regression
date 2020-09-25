@@ -48,11 +48,14 @@ def inverse(matrix):
 
             cofactor_matrix[l][c] = ((-1) ** (l + c)) * determinant(minor(matrix, l, c))
 
-    for l in range(len(cofactor_matrix)):
+    # if using this function by itself (out of multiple regression context), the following commented lines SHOULD BE ACTIVE
+    # because of error propagation reasons, dividing by det is left as a final operation
+
+    '''for l in range(len(cofactor_matrix)):
         for c in range(len(cofactor_matrix[0])):
 
             cofactor_matrix[l][c] /= det
-            #cofactor_matrix[l][c] = round(cofactor_matrix[l][c], DECIMAL_PRECISION)
+            #cofactor_matrix[l][c] = round(cofactor_matrix[l][c], DECIMAL_PRECISION)'''
 
     return transposed(cofactor_matrix)
 
@@ -146,6 +149,13 @@ print(f'auxiliary matrices: \nX = {X}, \nY = {Y}')
 # calculating vector B = transposed(b0, b1, .... bk)
 
 B = multiply(multiply(inverse(multiply(transposed(X), X)), transposed(X)), Y)
+
+det = determinant(multiply(transposed(X), X))
+
+for i in range(len(B)):
+    B[i][0] /= det
+
+# showing results
 
 print(f'\nequation of hyperplane is: y = {round(B[0][0], DECIMAL_PRECISION)} +', end=' ')
 
